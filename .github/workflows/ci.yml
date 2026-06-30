@@ -33,3 +33,8 @@ jobs:
       - name: Basic import check
         run: |
           python -c "from app.main import app; print(app.title)"
+
+      # Intentional failure step for CI learning/demo purposes.
+      - name: Intentional CI failure demo
+        run: |
+          python -c "import this_module_does_not_exist"
