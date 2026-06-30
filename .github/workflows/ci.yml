@@ -24,17 +24,12 @@ jobs:
           python-version: "3.12"
 
       # Shell commands executed directly on the runner.
-      - name: Install app
+      - name: Install runtime dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -e .
+          python -m pip install fastapi "uvicorn[standard]"
 
       # Minimal smoke check: imports FastAPI app object.
       - name: Basic import check
         run: |
           python -c "from app.main import app; print(app.title)"
-
-      # Intentional failure step for CI learning/demo purposes.
-      - name: Intentional CI failure demo
-        run: |
-          python -c "import this_module_does_not_exist"
