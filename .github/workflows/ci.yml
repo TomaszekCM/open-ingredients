@@ -1,0 +1,35 @@
+# Workflow name shown in GitHub Actions UI.
+name: CI
+
+# Triggers: run on every push and every pull request update.
+on:
+  push:
+  pull_request:
+
+jobs:
+  basic-check:
+    # Runner VM type provided by GitHub.
+    runs-on: ubuntu-latest
+
+    steps:
+      # Reusable action: checks out repository code into the runner workspace.
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Reusable action: installs and configures the selected Python version.
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          # Input parameter for setup-python action.
+          python-version: "3.12"
+
+      # Shell commands executed directly on the runner.
+      - name: Install runtime dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install fastapi "uvicorn[standard]"
+
+      # Minimal smoke check: imports FastAPI app object.
+      - name: Basic import check
+        run: |
+          python -c "from app.main import app; print(app.title)"
