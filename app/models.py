@@ -58,12 +58,14 @@ class User(Base):
     # In this demo, regular USER accounts may exist without tenant assignment.
     # MANUFACTURER accounts are tenant-scoped.
     # ADMIN accounts are global and must not be tenant/company bound.
+    # password_hash is populated for email/password accounts.
 
     id: Mapped[int] = mapped_column(primary_key=True)
     tenant_id: Mapped[int | None] = mapped_column(
         ForeignKey("tenants.id"), nullable=True
     )
     email: Mapped[str] = mapped_column(String(255), nullable=False)
+    password_hash: Mapped[str | None] = mapped_column(String(255), nullable=True)
     role: Mapped[UserRole] = mapped_column(
         Enum(UserRole, name="user_role"), nullable=False
     )
