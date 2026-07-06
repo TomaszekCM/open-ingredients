@@ -101,3 +101,18 @@ Key planning docs:
 
 * `/docs/adr.md` - architecture decisions
 * `/docs/commit-checklist.md` - starter small-commit implementation plan
+
+## Local JWT Secret
+
+Authentication uses JWT signed with `JWT_SECRET_KEY` from environment variables.
+
+For local development:
+
+* copy values from `.env.example`
+* set `JWT_SECRET_KEY` to a long random string
+
+Example secret generation:
+
+```bash
+python -c "import secrets; print(secrets.token_urlsafe(48))"
+```
