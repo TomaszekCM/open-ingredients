@@ -21,3 +21,10 @@ class LoginRequest(BaseModel):
 class AuthToken(BaseModel):
     access_token: str
     token_type: str = "bearer"
+
+
+class CurrentUserResponse(BaseModel):
+    id: int
+    email: str
+    role: str
+    tenant_id: int | None
