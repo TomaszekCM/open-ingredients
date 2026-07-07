@@ -116,3 +116,27 @@ Example secret generation:
 ```bash
 python -c "import secrets; print(secrets.token_urlsafe(48))"
 ```
+
+## Local CI on Every Commit
+
+To run local checks automatically before each commit and push:
+
+```bash
+git config core.hooksPath .githooks
+chmod +x .githooks/pre-commit .githooks/pre-push scripts/ci-quick-check.sh scripts/ci-local-check.sh
+```
+
+What runs before commit (fast):
+
+* FastAPI import smoke check: `python -c "from app.main import app; print(app.title)"`
+
+What runs before push (full):
+
+* `pytest -q`
+* FastAPI import smoke check: `python -c "from app.main import app; print(app.title)"`
+
+If dependencies are missing, install once with:
+
+```bash
+python -m pip install -e ".[dev]"
+```
